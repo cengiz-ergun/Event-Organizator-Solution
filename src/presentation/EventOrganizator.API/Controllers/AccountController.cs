@@ -1,4 +1,5 @@
-﻿using EventOrganizator.Application.Features.Commands.AppUser;
+﻿using EventOrganizator.API.Helpers;
+using EventOrganizator.Application.Features.Commands.AppUser;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace EventOrganizator.API.Controllers
         public async Task<IActionResult> Signup(SignupUserCommandRequest signupUserCommandRequest)
         {
             SignupUserCommandResponse signupUserCommandResponse = await _mediator.Send(signupUserCommandRequest);
-            return Ok(signupUserCommandResponse);
+            return CustomHttpResponse.Result(signupUserCommandResponse);
         }
 
         [HttpPost("[action]")]

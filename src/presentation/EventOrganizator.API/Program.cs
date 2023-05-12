@@ -1,3 +1,4 @@
+using EventOrganizator.API.Extensions;
 using EventOrganizator.Application;
 using EventOrganizator.Persistence;
 
@@ -20,7 +21,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.ConfigureExceptionHandler<Program>(app.Services.GetRequiredService<ILogger<Program>>());
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
