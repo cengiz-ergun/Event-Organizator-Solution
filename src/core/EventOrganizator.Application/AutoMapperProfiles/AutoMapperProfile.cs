@@ -19,6 +19,7 @@ namespace EventOrganizator.Application.AutoMapperProfiles
         {
             CreateMap<SignupUserCommandRequest, SignupUserDTO>().ReverseMap();
             CreateMap<SignupUserDTO, AppUser>().ReverseMap();
+            CreateMap<AppUser, SignupUserResponseData>().ReverseMap();
             CreateMap<IdentityResult, SignupUserResponseDTO>().ReverseMap();
             CreateMap<SignupUserResponseDTO, SignupUserCommandResponse>().ReverseMap();
 

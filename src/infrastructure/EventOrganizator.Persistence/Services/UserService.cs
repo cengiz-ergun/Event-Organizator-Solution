@@ -42,6 +42,9 @@ namespace EventOrganizator.Persistence.Services
             }
             else
             {
+                var data = _mapper.Map<SignupUserResponseData>(appUser);
+                signupUserResponseDTO.Data.Add(data);
+
                 // if it is first user, assign it as admin
                 var userCount = _userManager.Users.Count();
                 if (userCount == 1)
@@ -53,10 +56,6 @@ namespace EventOrganizator.Persistence.Services
                     await _userManager.AddToRolesAsync(appUser, new string[] { Roles.Member });
                 }
                 var roles = await _userManager.GetRolesAsync(appUser);
-                if (roles.Count != 1)
-                {
-                    throw new UserHasNotOneRoleException();
-                }
                 _logger.LogInformation($"User with Id:{appUser.Id}, Name:{appUser.FirstName}, Role:{roles.FirstOrDefault()} created.");
             }
             return signupUserResponseDTO;

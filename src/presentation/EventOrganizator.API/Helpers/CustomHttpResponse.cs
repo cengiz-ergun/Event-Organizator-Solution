@@ -1,32 +1,33 @@
 ﻿using EventOrganizator.Application.Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace EventOrganizator.API.Helpers
 {
     public static class CustomHttpResponse
     {
-        public static ObjectResult Result(Response response)
+        public static IActionResult Result(Response response)
         {
-            if (response.Errors.Count > 0) 
+            if (response.Errors.Count > 0)
             {
-                return new BadRequestObjectResult(new
+                return new UnprocessableEntityObjectResult(new
                 {
-                    Message = "Some error(s) while handling your request.",
-                    Errors = response.Errors
+                    errors = response.Errors
                 });
             }
-            else if(response.Data.Count > 0)
+            else if (response.Data.Count > 0)
             {
                 return new OkObjectResult(new
                 {
-                    Message = "Your request handled succesfully.",
-                    Data = response.Data
-                });
+                    payload = response.Data,
+                    count   = response.Data.Count
+                });              
+
             }
-            return new OkObjectResult(new
+            else
             {
-                Message = "Your request handled succesfully."
-            });
+                return new NoContentResult();
+            }
         }
     }
 }
