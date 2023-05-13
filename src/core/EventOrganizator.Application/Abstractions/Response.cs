@@ -9,5 +9,6 @@ namespace EventOrganizator.Application.Abstractions
     public abstract class Response
     {
         public List<string> Errors { get; set; } = new();
+        public List<string> Data { get; set; } = new();
     }
 }

@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\core\EventOrganizator.Application\EventOrganizator.Application.csproj" />
+    <ProjectReference Include="..\..\core\EventOrganizator.Application\EventOrganizator.Application.csproj" />
   </ItemGroup>
 
 </Project>
