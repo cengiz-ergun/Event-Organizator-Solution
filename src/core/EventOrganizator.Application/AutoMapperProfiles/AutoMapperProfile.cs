@@ -23,6 +23,9 @@ namespace EventOrganizator.Application.AutoMapperProfiles
             CreateMap<IdentityResult, SignupUserResponseDTO>().ReverseMap();
             CreateMap<SignupUserResponseDTO, SignupUserCommandResponse>().ReverseMap();
 
+            CreateMap<LoginUserCommandRequest, LoginUserDTO>().ReverseMap();
+            CreateMap<LoginUserResponseDTO, LoginUserCommandResponse>().ReverseMap();
+
 
         }
     }

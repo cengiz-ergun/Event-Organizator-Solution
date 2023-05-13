@@ -8,26 +8,41 @@ namespace EventOrganizator.API.Helpers
     {
         public static IActionResult Result(Response response)
         {
-            if (response.Errors.Count > 0)
+            switch (response.HttpStatusCode)
             {
-                return new UnprocessableEntityObjectResult(new
-                {
-                    errors = response.Errors
-                });
-            }
-            else if (response.Data.Count > 0)
-            {
-                return new OkObjectResult(new
-                {
-                    payload = response.Data,
-                    count   = response.Data.Count
-                });              
 
+                case System.Net.HttpStatusCode.UnprocessableEntity:
+                    return new UnprocessableEntityObjectResult(new
+                    {
+                        errors = response.Errors
+                    });
+
+                case System.Net.HttpStatusCode.OK:
+                    return new OkObjectResult(new
+                    {
+                        data = response.Data,
+                        count = response.Data.Count
+                    });
+                case System.Net.HttpStatusCode.Created:
+                    return new OkObjectResult(new //should be CreatedResult. this will be handled after user endpoint
+                    {
+                        data = response.Data,
+                        count = response.Data.Count
+                    });
+                case System.Net.HttpStatusCode.NotFound:
+                    return new NotFoundObjectResult(new
+                    {
+                        message = response.Message
+                    });
+                case System.Net.HttpStatusCode.Unauthorized:
+                    return new UnauthorizedObjectResult(new
+                    {
+                        message = response.Message
+                    });
+                default:
+                    break;                
             }
-            else
-            {
-                return new NoContentResult();
-            }
+            throw new Exception();
         }
     }
 }

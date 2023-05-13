@@ -1,12 +1,14 @@
 using EventOrganizator.API.Extensions;
 using EventOrganizator.Application;
 using EventOrganizator.Persistence;
+using EventOrganizator.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices();
+builder.Services.AddInfrastructureServices();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

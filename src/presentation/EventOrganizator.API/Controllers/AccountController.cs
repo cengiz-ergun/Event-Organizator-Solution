@@ -24,9 +24,10 @@ namespace EventOrganizator.API.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult Login()
+        public async Task<IActionResult> Login(LoginUserCommandRequest loginUserCommandRequest)
         {
-            return Ok();
+            LoginUserCommandResponse loginUserCommandResponse = await _mediator.Send(loginUserCommandRequest);
+            return CustomHttpResponse.Result(loginUserCommandResponse);
         }
     }
 }

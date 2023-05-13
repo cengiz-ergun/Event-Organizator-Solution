@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EventOrganizator.Persistence.Configuration;
+using EventOrganizator.Application.Abstractions;
 
 namespace EventOrganizator.Persistence
 {

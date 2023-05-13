@@ -1,4 +1,5 @@
 ﻿using EventOrganizator.Application.DTOs.AppUser;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace EventOrganizator.Application.Abstractions.Services
     public interface IUserService
     {
         Task<SignupUserResponseDTO> SignupUserAsync(SignupUserDTO model);
+        Task<LoginUserResponseDTO> LoginUserAsync(LoginUserDTO model);
     }
 }

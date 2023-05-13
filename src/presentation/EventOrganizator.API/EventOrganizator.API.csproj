@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\core\EventOrganizator.Application\EventOrganizator.Application.csproj" />
+    <ProjectReference Include="..\..\infrastructure\EventOrganizator.Infrastructure\EventOrganizator.Infrastructure.csproj" />
     <ProjectReference Include="..\..\infrastructure\EventOrganizator.Persistence\EventOrganizator.Persistence.csproj" />
   </ItemGroup>
 

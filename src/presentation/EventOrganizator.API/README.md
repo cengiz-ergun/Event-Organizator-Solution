@@ -11,6 +11,7 @@
                <ul>
                     <li><a href="#semantic-errors">Semantic Errors</a></li>
                     <li><a href="#lexical-errors">Lexical Errors</a></li>
+                    <li><a href="#not-found">Not Found</a></li>
                </ul>
         </li>
       </ul>
@@ -23,7 +24,7 @@
 You can handle http response content according to http response stasuses.
 
 ### <a>Succesful Response</a>
-- If response has content, http status will be 200 OK. Content will be like:
+- If response has content, http status will be 200 OK. Body will be like:
 ````
 {
   "payload": [
@@ -45,7 +46,7 @@ You can handle http response content according to http response stasuses.
 ### Failed Response
 
 #### Semantic Errors
-- If there are semantic errors, http status will be 422 Unprocessable Content. Content will be like:
+- If there are semantic errors, http status will be 422 Unprocessable Content. Body will be like:
 ````
 {
   "errors": [
@@ -56,7 +57,7 @@ You can handle http response content according to http response stasuses.
 ````
 
 #### Lexical Errors
-- If there are lexical errors, http status will be 400 Bad Request. Content will be like:
+- If there are lexical errors, http status will be 400 Bad Request. Body will be like:
 ````
 {
   "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
@@ -68,5 +69,21 @@ You can handle http response content according to http response stasuses.
       "FirstName is required!"
     ]
   }
+}
+````
+
+#### Not Found
+- If resource not found, http status will be 404 Not Found. Body will be like:
+````
+{
+  "message": "There is not a registered user with e-mail fakemail@mail.com."
+}
+````
+
+#### Unauthorized
+- If password is wrong for login attempt, http status will be 401 Unauthorized. Body will be like:
+````
+{
+  "message": "Password is not valid."
 }
 ````
