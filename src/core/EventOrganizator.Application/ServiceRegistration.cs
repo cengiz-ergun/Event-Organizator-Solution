@@ -10,6 +10,7 @@ using EventOrganizator.Application.AutoMapperProfiles;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using EventOrganizator.Application.Features.Commands.AppUser;
+using EventOrganizator.Application.Features.Commands.Category;
 
 namespace EventOrganizator.Application
 {
@@ -20,7 +21,11 @@ namespace EventOrganizator.Application
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceRegistration).Assembly));
 
             services.AddFluentValidationAutoValidation();
+
             services.AddValidatorsFromAssemblyContaining<SignupUserCommandRequestValidator>();
+            services.AddValidatorsFromAssemblyContaining<LoginUserCommandRequestValidator>();
+
+            services.AddValidatorsFromAssemblyContaining<CategoryCreateCommandRequestValidator>();
 
             services.AddAutoMapper(typeof(AutoMapperProfile));
         }

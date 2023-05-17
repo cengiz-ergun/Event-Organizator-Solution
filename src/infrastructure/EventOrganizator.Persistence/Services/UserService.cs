@@ -93,7 +93,7 @@ namespace EventOrganizator.Persistence.Services
                 {
                     loginUserResponseDTO.HttpStatusCode = System.Net.HttpStatusCode.OK;
                     var roles = await _userManager.GetRolesAsync(user);
-                    Token token = _tokenHandler.CreateAccessToken(1000, user, roles.FirstOrDefault());
+                    Token token = _tokenHandler.CreateAccessToken(1, user, roles.FirstOrDefault());
                     loginUserResponseDTO.Data.Add(token);
                 }
             }

@@ -9,7 +9,7 @@ namespace EventOrganizator.Application.Abstractions.Token
 {
     public interface ITokenHandler
     {
-        DTOs.Token CreateAccessToken(int second, AppUser appUser, string role);
+        DTOs.Token CreateAccessToken(int day, AppUser appUser, string role);
         string CreateRefreshToken();
     }
 }

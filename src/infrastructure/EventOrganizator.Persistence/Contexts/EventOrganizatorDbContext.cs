@@ -1,4 +1,5 @@
-﻿using EventOrganizator.Domain.Entities.Identity;
+﻿using EventOrganizator.Domain.Entities;
+using EventOrganizator.Domain.Entities.Identity;
 using EventOrganizator.Persistence.Configuration;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,27 @@ namespace EventOrganizator.Persistence.Contexts
             }
 
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
+
+            //Category
+            modelBuilder.Entity<Category>()
+                .Property(p => p.Name)
+                .HasMaxLength(20);
+            modelBuilder.Entity<Category>()
+                .HasIndex(p => p.Name)
+                .IsUnique();
+
+
+            //City
+            modelBuilder.Entity<City>()
+                .Property(p => p.Name)
+                .HasMaxLength(20);
+            modelBuilder.Entity<City>()
+                .HasIndex(p => p.Name)
+                .IsUnique();
+
         }
+
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<City> Cities { get; set; }
     }
 }

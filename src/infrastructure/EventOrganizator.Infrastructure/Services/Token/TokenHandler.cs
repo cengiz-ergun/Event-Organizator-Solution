@@ -22,7 +22,7 @@ namespace EventOrganizator.Infrastructure.Services.Token
             _configuration = configuration;
         }
 
-        public Application.DTOs.Token CreateAccessToken(int second, AppUser user, string role)
+        public Application.DTOs.Token CreateAccessToken(int day, AppUser user, string role)
         {
             Application.DTOs.Token token = new();
 
@@ -30,7 +30,7 @@ namespace EventOrganizator.Infrastructure.Services.Token
 
             SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha256);
 
-            token.Expiration = DateTime.UtcNow.AddSeconds(second);
+            token.Expiration = DateTime.UtcNow.AddDays(day);
             JwtSecurityToken securityToken = new (
                 audience: _configuration["Token:Audience"],
                 issuer: _configuration["Token:Issuer"],

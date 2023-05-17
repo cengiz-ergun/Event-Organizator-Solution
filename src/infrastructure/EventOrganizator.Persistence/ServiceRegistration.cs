@@ -12,6 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using EventOrganizator.Persistence.Configuration;
 using EventOrganizator.Application.Abstractions;
+using Microsoft.Extensions.Options;
+using EventOrganizator.Application.Repositories.Category;
+using EventOrganizator.Persistence.Repositories.Category;
 
 namespace EventOrganizator.Persistence
 {
@@ -30,12 +33,17 @@ namespace EventOrganizator.Persistence
                 o.Password.RequireNonAlphanumeric = false;
                 o.Password.RequiredLength = 10;
                 o.User.RequireUniqueEmail = true;
+                o.User.AllowedUserNameCharacters = null;
             });
             builder = new IdentityBuilder(builder.UserType, typeof(AppRole), builder.Services);
             builder.AddEntityFrameworkStores<EventOrganizatorDbContext>()
                    .AddDefaultTokenProviders();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+
+            services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
+            services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
         }
     }
 }

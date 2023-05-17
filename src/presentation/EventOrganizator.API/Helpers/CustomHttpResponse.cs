@@ -39,6 +39,8 @@ namespace EventOrganizator.API.Helpers
                     {
                         message = response.Message
                     });
+                case System.Net.HttpStatusCode.NoContent:
+                    return new NoContentResult();
                 default:
                     break;                
             }
