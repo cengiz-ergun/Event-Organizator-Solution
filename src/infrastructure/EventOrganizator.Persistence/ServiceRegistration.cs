@@ -15,6 +15,8 @@ using EventOrganizator.Application.Abstractions;
 using Microsoft.Extensions.Options;
 using EventOrganizator.Application.Repositories.Category;
 using EventOrganizator.Persistence.Repositories.Category;
+using EventOrganizator.Application.UoW;
+using EventOrganizator.Persistence.UoW;
 
 namespace EventOrganizator.Persistence
 {
@@ -44,6 +46,8 @@ namespace EventOrganizator.Persistence
 
             services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
             services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }

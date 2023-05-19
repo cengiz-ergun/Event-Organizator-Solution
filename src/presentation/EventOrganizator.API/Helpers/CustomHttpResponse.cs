@@ -10,13 +10,34 @@ namespace EventOrganizator.API.Helpers
         {
             switch (response.HttpStatusCode)
             {
-
+                // Error
+                case System.Net.HttpStatusCode.BadRequest:
+                    return new BadRequestObjectResult(new
+                    {
+                        errors = response.Errors
+                    });
+                case System.Net.HttpStatusCode.Unauthorized:
+                    return new UnauthorizedObjectResult(new
+                    {
+                        errors = response.Errors
+                    });
+                case System.Net.HttpStatusCode.NotFound:
+                    return new NotFoundObjectResult(new
+                    {
+                        errors = response.Errors
+                    });
+                case System.Net.HttpStatusCode.Conflict:
+                    return new ConflictObjectResult(new
+                    {
+                        errors = response.Errors
+                    });
                 case System.Net.HttpStatusCode.UnprocessableEntity:
                     return new UnprocessableEntityObjectResult(new
                     {
                         errors = response.Errors
                     });
 
+                // Success
                 case System.Net.HttpStatusCode.OK:
                     return new OkObjectResult(new
                     {
@@ -28,16 +49,6 @@ namespace EventOrganizator.API.Helpers
                     {
                         data = response.Data,
                         count = response.Data.Count
-                    });
-                case System.Net.HttpStatusCode.NotFound:
-                    return new NotFoundObjectResult(new
-                    {
-                        message = response.Message
-                    });
-                case System.Net.HttpStatusCode.Unauthorized:
-                    return new UnauthorizedObjectResult(new
-                    {
-                        message = response.Message
                     });
                 case System.Net.HttpStatusCode.NoContent:
                     return new NoContentResult();

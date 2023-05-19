@@ -11,6 +11,7 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using EventOrganizator.Application.Features.Commands.AppUser;
 using EventOrganizator.Application.Features.Commands.Category;
+using EventOrganizator.Application.DTOs.City;
 
 namespace EventOrganizator.Application
 {
@@ -26,6 +27,8 @@ namespace EventOrganizator.Application
             services.AddValidatorsFromAssemblyContaining<LoginUserCommandRequestValidator>();
 
             services.AddValidatorsFromAssemblyContaining<CategoryCreateCommandRequestValidator>();
+
+            services.AddValidatorsFromAssemblyContaining<CreateCityDTOValidator>();
 
             services.AddAutoMapper(typeof(AutoMapperProfile));
         }

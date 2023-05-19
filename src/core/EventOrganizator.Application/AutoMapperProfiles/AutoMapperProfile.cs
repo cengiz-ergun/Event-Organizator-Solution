@@ -2,6 +2,7 @@
 using EventOrganizator.Application.Abstractions;
 using EventOrganizator.Application.DTOs.AppUser;
 using EventOrganizator.Application.DTOs.Category;
+using EventOrganizator.Application.DTOs.City;
 using EventOrganizator.Application.Features.Commands.AppUser;
 using EventOrganizator.Application.Features.Commands.Category;
 using EventOrganizator.Application.Features.Queries.Category;
@@ -39,6 +40,11 @@ namespace EventOrganizator.Application.AutoMapperProfiles
             CreateMap<Response, GetAllCategoriesQueryResponse>().ReverseMap();
             CreateMap<Response, GetCategoryByIdQueryResponse>().ReverseMap();
             CreateMap<Response, DeleteCategoryCommandResponse>().ReverseMap();
+
+
+            CreateMap<City, CreateCityDTO>().ReverseMap();
+            CreateMap<City, CityDTO>().ReverseMap();
+
         }
     }
 }

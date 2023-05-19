@@ -1,4 +1,5 @@
 ﻿using EventOrganizator.Application.DTOs.AppUser;
+using EventOrganizator.Application.DTOs.Member;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,7 @@ namespace EventOrganizator.Application.Abstractions.Services
     {
         Task<SignupUserResponseDTO> SignupUserAsync(SignupUserDTO model);
         Task<LoginUserResponseDTO> LoginUserAsync(LoginUserDTO model);
+
+        Task<Response> UpdateMemberAsync(UpdateMemberDTO updateMemberDTO);
     }
 }

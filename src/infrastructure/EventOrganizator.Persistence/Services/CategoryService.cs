@@ -29,8 +29,6 @@ namespace EventOrganizator.Persistence.Services
             _categoryReadRepository = categoryReadRepository;
             _categoryWriteRepository = categoryWriteRepository;
             _mapper = mapper;
-
-
         }
         public async Task<Response> CreateCategoryAsync(CreateCategory createCategory)
         {
@@ -68,7 +66,7 @@ namespace EventOrganizator.Persistence.Services
             if (category == null)
             {
                 response.HttpStatusCode = System.Net.HttpStatusCode.NotFound;
-                response.Message = $"There is not a category with id {id}";
+                response.Errors.Add($"There is not a category with id {id}");
             }
             else
             {
@@ -100,7 +98,7 @@ namespace EventOrganizator.Persistence.Services
             if (category == null)
             {
                 response.HttpStatusCode = System.Net.HttpStatusCode.NotFound;
-                response.Message = $"There is not a category with id {id}";
+                response.Errors.Add($"There is not a category with id {id}");
             }
             else
             {

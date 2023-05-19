@@ -1,4 +1,6 @@
-﻿using EventOrganizator.Application.Abstractions.Token;
+﻿using EventOrganizator.Application.Abstractions.Services;
+using EventOrganizator.Application.Abstractions.Token;
+using EventOrganizator.Infrastructure.Services;
 using EventOrganizator.Infrastructure.Services.Token;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,6 +16,7 @@ namespace EventOrganizator.Infrastructure
         public static void AddInfrastructureServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<ITokenHandler, TokenHandler>();
+            serviceCollection.AddScoped<IWorkingContext, WorkingContext>();
         }
     }
 }
