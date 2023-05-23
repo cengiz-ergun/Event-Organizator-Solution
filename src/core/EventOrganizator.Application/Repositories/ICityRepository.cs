@@ -12,5 +12,6 @@ namespace EventOrganizator.Application.Repositories
     {
         //Task<Category> UpdateUser(Category category);
         //Task<City> GetByName(string name, Expression<Func<City, bool>> filter = null);
+        Task<City> Get(Expression<Func<City, bool>> filter = null);
     }
 }

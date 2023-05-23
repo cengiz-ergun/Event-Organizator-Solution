@@ -41,8 +41,10 @@ namespace EventOrganizator.Persistence
             builder.AddEntityFrameworkStores<EventOrganizatorDbContext>()
                    .AddDefaultTokenProviders();
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserService, UserService>();            
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IEventService, EventService>();
 
             services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
             services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();

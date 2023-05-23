@@ -3,6 +3,7 @@ using EventOrganizator.Application.Abstractions;
 using EventOrganizator.Application.DTOs.AppUser;
 using EventOrganizator.Application.DTOs.Category;
 using EventOrganizator.Application.DTOs.City;
+using EventOrganizator.Application.DTOs.Event;
 using EventOrganizator.Application.Features.Commands.AppUser;
 using EventOrganizator.Application.Features.Commands.Category;
 using EventOrganizator.Application.Features.Queries.Category;
@@ -44,6 +45,9 @@ namespace EventOrganizator.Application.AutoMapperProfiles
 
             CreateMap<City, CreateCityDTO>().ReverseMap();
             CreateMap<City, CityDTO>().ReverseMap();
+
+            CreateMap<Event, CreateEventDTO>().ReverseMap();
+            CreateMap<Event, EventDTO>().ReverseMap();
 
         }
     }

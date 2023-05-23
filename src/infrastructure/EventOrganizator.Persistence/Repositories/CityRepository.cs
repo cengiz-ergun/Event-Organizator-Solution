@@ -1,6 +1,7 @@
 ﻿using EventOrganizator.Application.Repositories;
 using EventOrganizator.Domain.Entities;
 using EventOrganizator.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,10 @@ namespace EventOrganizator.Persistence.Repositories
         {
             _eventOrganizatorDbContext = eventOrganizatorDbContext;
         }
-
+        public async Task<City> Get(Expression<Func<City, bool>> filter = null)
+        {
+            return await _eventOrganizatorDbContext.Set<City>().Include("Events").AsNoTracking().FirstOrDefaultAsync(filter);
+        }
         //public Task<City> GetByName(string name, Expression<Func<City, bool>> filter = null)
         //{
         //    return _eventOrganizerDbContext.Set<City>().AsNoTracking().Where(filter).FirstOrDefaultAsync(c => c.Name == name.ToLower());

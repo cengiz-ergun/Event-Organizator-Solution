@@ -14,6 +14,8 @@ namespace EventOrganizator.Persistence.UoW
     {
         public ICityRepository CityRepository { get; private set; }
 
+        public IEventRepository EventRepository { get; private set; }
+
         private EventOrganizatorDbContext _eventOrganizatorDbContext;
 
         public UnitOfWork(EventOrganizatorDbContext eventOrganizatorDbContext)
@@ -21,6 +23,7 @@ namespace EventOrganizator.Persistence.UoW
             _eventOrganizatorDbContext = eventOrganizatorDbContext;
 
             CityRepository = new CityRepository(_eventOrganizatorDbContext);
+            EventRepository = new EventRepository(_eventOrganizatorDbContext);
         }
 
 

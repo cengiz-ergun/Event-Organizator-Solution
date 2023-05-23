@@ -10,6 +10,7 @@ namespace EventOrganizator.Application.UoW
     public interface IUnitOfWork
     {
         ICityRepository CityRepository { get; }
+        IEventRepository EventRepository { get; }
 
         void Commit();
     }

@@ -49,9 +49,22 @@ namespace EventOrganizator.Persistence.Contexts
                 .HasIndex(p => p.Name)
                 .IsUnique();
 
+            //Event
+            modelBuilder.Entity<Event>()
+                .Property(p => p.Name)
+                .HasMaxLength(30);
+            modelBuilder.Entity<Event>()
+                .Property(p => p.Address)
+                .HasMaxLength(100);
+            modelBuilder.Entity<Event>()
+                .Property(p => p.Details)
+                .HasMaxLength(100);
+
         }
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Event> Events { get; set; }
+
     }
 }

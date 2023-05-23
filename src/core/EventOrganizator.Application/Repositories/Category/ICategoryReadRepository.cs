@@ -9,5 +9,6 @@ namespace EventOrganizator.Application.Repositories.Category
 {
     public interface ICategoryReadRepository : IReadRepository<EventOrganizator.Domain.Entities.Category>
     {
+        Task<EventOrganizator.Domain.Entities.Category> GetByIdAsync(int id, bool tracking = true);
     }
 }

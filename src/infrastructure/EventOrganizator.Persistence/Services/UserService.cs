@@ -103,7 +103,7 @@ namespace EventOrganizator.Persistence.Services
                 {
                     loginUserResponseDTO.HttpStatusCode = System.Net.HttpStatusCode.OK;
                     var roles = await _userManager.GetRolesAsync(user);
-                    Token token = _tokenHandler.CreateAccessToken(1, user, roles.FirstOrDefault());
+                    Token token = _tokenHandler.CreateAccessToken(7, user, roles.FirstOrDefault());
                     loginUserResponseDTO.Data.Add(token);
                 }
             }
@@ -137,7 +137,7 @@ namespace EventOrganizator.Persistence.Services
 
             if (!resetPasswordResult.Succeeded)
             {
-                response.HttpStatusCode = System.Net.HttpStatusCode.BadRequest;
+                response.HttpStatusCode = System.Net.HttpStatusCode.UnprocessableEntity;
                 response.Errors = resetPasswordResult.Errors.Select(kvp => kvp.Description).ToList();
                 return response;
             }

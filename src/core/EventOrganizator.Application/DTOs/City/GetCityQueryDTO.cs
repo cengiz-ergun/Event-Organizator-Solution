@@ -9,6 +9,6 @@ namespace EventOrganizator.Application.DTOs.City
     public class GetCityQueryDTO
     {
         public int Page { get; set; } = 0;
-        public int Size { get; set; } = 10;
+        public int Size { get; set; } = 100;
     }
 }

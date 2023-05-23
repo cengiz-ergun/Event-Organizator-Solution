@@ -10,8 +10,8 @@ namespace EventOrganizator.Application.DTOs.Member
 {
     public class UpdateMemberDTO
     {
-        public string OldPassword { get; set; }
-        public string NewPassword { get; set; }
+        public string? OldPassword { get; set; }
+        public string? NewPassword { get; set; }
     }
 
     public class UpdateMemberDTOValidator : AbstractValidator<UpdateMemberDTO>

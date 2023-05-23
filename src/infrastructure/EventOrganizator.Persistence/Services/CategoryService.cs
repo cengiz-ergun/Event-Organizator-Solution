@@ -3,6 +3,7 @@ using EventOrganizator.Application.Abstractions;
 using EventOrganizator.Application.Abstractions.Services;
 using EventOrganizator.Application.DTOs.AppUser;
 using EventOrganizator.Application.DTOs.Category;
+using EventOrganizator.Application.DTOs.City;
 using EventOrganizator.Application.Repositories.Category;
 using EventOrganizator.Domain.Entities;
 using EventOrganizator.Persistence.Repositories.Category;
@@ -32,12 +33,21 @@ namespace EventOrganizator.Persistence.Services
         }
         public async Task<Response> CreateCategoryAsync(CreateCategory createCategory)
         {
-            var query = _categoryReadRepository.GetWhere(C => C.Name == createCategory.Name);
+            var query = _categoryReadRepository.GetWhere(C => C.Name.ToLower() == createCategory.Name.ToLower());
             Response response = new Response();
-            if (query.Any())
+            if (query.Any() && query.FirstOrDefault().IsDeleted == false)
             {
                 response.HttpStatusCode = System.Net.HttpStatusCode.UnprocessableEntity;
-                response.Errors.Add($"There is already a category named {query.FirstOrDefault().Name}.");
+                response.Errors.Add($"There is already a category named {createCategory.Name}.");
+            }
+            else if(query.Any() && query.FirstOrDefault().IsDeleted == true)
+            {
+                Category category = query.FirstOrDefault();
+                category.IsDeleted = false;
+                category.Name = createCategory.Name;
+                _categoryWriteRepository.Update(category);
+                response.HttpStatusCode = System.Net.HttpStatusCode.Created;
+                response.Data.Add(_mapper.Map<SingleCategory>(category));
             }
             else
             {
@@ -70,9 +80,18 @@ namespace EventOrganizator.Persistence.Services
             }
             else
             {
-                await _categoryWriteRepository.RemoveAsync(id);
-                await _categoryWriteRepository.SaveAsync();
-                response.HttpStatusCode = System.Net.HttpStatusCode.NoContent;
+                var result = category.Events.Select(e => e.EventStatus != Domain.Enum.EventStatus.Canceled || e.EventStatus != Domain.Enum.EventStatus.Ended);
+                if (result.Count() > 0)
+                {
+                    response.HttpStatusCode = System.Net.HttpStatusCode.UnprocessableEntity;
+                    response.Errors.Add($"Sorry. This category has one or more event which is at Pending or Active status.");
+                }
+                else
+                {
+                    await _categoryWriteRepository.RemoveAsync(id);
+                    await _categoryWriteRepository.SaveAsync();
+                    response.HttpStatusCode = System.Net.HttpStatusCode.NoContent;
+                }
             }
             return response;
         }

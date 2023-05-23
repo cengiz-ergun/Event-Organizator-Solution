@@ -12,6 +12,7 @@ using FluentValidation;
 using EventOrganizator.Application.Features.Commands.AppUser;
 using EventOrganizator.Application.Features.Commands.Category;
 using EventOrganizator.Application.DTOs.City;
+using EventOrganizator.Application.DTOs.Event;
 
 namespace EventOrganizator.Application
 {
@@ -29,6 +30,11 @@ namespace EventOrganizator.Application
             services.AddValidatorsFromAssemblyContaining<CategoryCreateCommandRequestValidator>();
 
             services.AddValidatorsFromAssemblyContaining<CreateCityDTOValidator>();
+
+            services.AddValidatorsFromAssemblyContaining<CreateEventDTOValidator>();
+            services.AddValidatorsFromAssemblyContaining<GetEventByIdDTOValidator>();
+            services.AddValidatorsFromAssemblyContaining<PatchEventByAdministratorDTOValidator>();
+            services.AddValidatorsFromAssemblyContaining<PatchEventByMemberDTOValidator>();
 
             services.AddAutoMapper(typeof(AutoMapperProfile));
         }

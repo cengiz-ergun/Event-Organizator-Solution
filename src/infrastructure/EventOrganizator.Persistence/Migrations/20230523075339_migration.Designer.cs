@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventOrganizator.Persistence.Migrations
 {
     [DbContext(typeof(EventOrganizatorDbContext))]
-    [Migration("20230516184752_city-and-category")]
-    partial class cityandcategory
+    [Migration("20230523075339_migration")]
+    partial class migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,6 +34,9 @@ namespace EventOrganizator.Persistence.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -62,6 +65,9 @@ namespace EventOrganizator.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -76,6 +82,68 @@ namespace EventOrganizator.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("EventOrganizator.Domain.Entities.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedByAppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("EventStatus")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("NumberOfPeople")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CreatedByAppUserId");
+
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("EventOrganizator.Domain.Entities.Identity.AppRole", b =>
@@ -108,15 +176,15 @@ namespace EventOrganizator.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "93620b76-6b30-4e3e-8a7f-0297df5d9551",
-                            ConcurrencyStamp = "fadf5791-7139-4478-87cb-d3f19b91b2cb",
+                            Id = "afa3d54d-e2c7-43cf-8728-8a2da9b1463e",
+                            ConcurrencyStamp = "79a02544-1be4-44f1-a038-8b94a4d65a14",
                             Name = "Administrator",
                             NormalizedName = "Administrator"
                         },
                         new
                         {
-                            Id = "d9dfa9ed-0e1f-4ab4-b531-8a95eb7670f0",
-                            ConcurrencyStamp = "1729ad94-2786-4b6c-a1fa-71d93a6caf01",
+                            Id = "7e95bd30-bb66-4fd3-b5b1-048f4568e951",
+                            ConcurrencyStamp = "2236a9d9-80dc-49cb-aa98-a8d31020b5ed",
                             Name = "Member",
                             NormalizedName = "Member"
                         });
@@ -315,6 +383,33 @@ namespace EventOrganizator.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("EventOrganizator.Domain.Entities.Event", b =>
+                {
+                    b.HasOne("EventOrganizator.Domain.Entities.Category", "Category")
+                        .WithMany("Events")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EventOrganizator.Domain.Entities.City", "City")
+                        .WithMany("Events")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EventOrganizator.Domain.Entities.Identity.AppUser", "CreatedByAppUser")
+                        .WithMany("Events")
+                        .HasForeignKey("CreatedByAppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("City");
+
+                    b.Navigation("CreatedByAppUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("EventOrganizator.Domain.Entities.Identity.AppRole", null)
@@ -364,6 +459,21 @@ namespace EventOrganizator.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EventOrganizator.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("Events");
+                });
+
+            modelBuilder.Entity("EventOrganizator.Domain.Entities.City", b =>
+                {
+                    b.Navigation("Events");
+                });
+
+            modelBuilder.Entity("EventOrganizator.Domain.Entities.Identity.AppUser", b =>
+                {
+                    b.Navigation("Events");
                 });
 #pragma warning restore 612, 618
         }
