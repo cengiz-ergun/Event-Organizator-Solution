@@ -42,7 +42,8 @@ namespace EventOrganizator.Infrastructure.Services.Token
                         new Claim("firstname", user.FirstName),
                         new Claim("lastname", user.LastName),
                         new Claim("email", user.Email),
-                        new Claim(ClaimTypes.Role, role)
+                        new Claim(ClaimTypes.Role, role),
+                        new Claim("id", user.Id)
                     }
                 );
 

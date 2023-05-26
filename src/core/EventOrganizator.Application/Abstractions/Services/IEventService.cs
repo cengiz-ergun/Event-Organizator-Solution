@@ -16,5 +16,6 @@ namespace EventOrganizator.Application.Abstractions.Services
         Task<Response> PatchEvent(int Id, PatchEventByAdministratorDTO patchEventByAdministratorDTO);
         Task<Response> PatchEvent(PatchEventByMemberDTO patchEventByMemberDTO);
         Task<Response> CancelEvent(int Id);
+        Task<Response> HardDeleteEvent(int Id);
     }
 }

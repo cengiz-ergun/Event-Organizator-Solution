@@ -6,6 +6,7 @@ using EventOrganizator.Application.DTOs.Event;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace EventOrganizator.API.Controllers
 {
@@ -62,10 +63,18 @@ namespace EventOrganizator.API.Controllers
         }
 
         [Authorize(Roles = "Member")]
-        [HttpDelete("{Id}")]
-        public async Task<IActionResult> CancelEvent([FromRoute] int Id)
+        [HttpPut("[action]/{Id}")]
+        public async Task<IActionResult> Cancel([FromRoute] int Id)
         {
             Response response = await _eventService.CancelEvent(Id);
+            return CustomHttpResponse.Result(response);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteEvent([FromRoute] int Id)
+        {
+            Response response = await _eventService.HardDeleteEvent(Id);
             return CustomHttpResponse.Result(response);
         }
     }

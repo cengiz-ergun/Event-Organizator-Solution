@@ -238,8 +238,33 @@ namespace EventOrganizator.Persistence.Services
                 return response;
             }
 
+            if ((@event.Date - DateTime.UtcNow).TotalDays < 5)
+            {
+                response.HttpStatusCode = System.Net.HttpStatusCode.UnprocessableEntity;
+                response.Errors.Add($"You can not cancel the event due to there are 5 days to it.");
+                return response;
+            }
+
             @event.EventStatus = EventStatus.Canceled;
             await _unitOfWork.EventRepository.Update(@event);
+            response.HttpStatusCode = System.Net.HttpStatusCode.NoContent;
+            return response;
+        }
+
+        public async Task<Response> HardDeleteEvent(int Id)
+        {
+            Response response = new();
+
+            Event @event = await _unitOfWork.EventRepository.Get(e => e.Id == Id);
+
+            if (@event == null)
+            {
+                response.HttpStatusCode = System.Net.HttpStatusCode.NotFound;
+                response.Errors.Add($"There isn't an event id with {Id}");
+                return response;
+            }
+
+            await _unitOfWork.EventRepository.HardDelete(@event);
             response.HttpStatusCode = System.Net.HttpStatusCode.NoContent;
             return response;
         }

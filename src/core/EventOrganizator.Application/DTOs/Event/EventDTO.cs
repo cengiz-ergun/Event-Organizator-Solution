@@ -1,4 +1,5 @@
 ﻿using EventOrganizator.Domain.Enum;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,19 @@ namespace EventOrganizator.Application.DTOs.Event
         public string Address { get; set; }
         public EventStatus EventStatus { get; set; }
         public int NumberOfPeople { get; set; }
-        public DateTime Date { get; set; }
+        //public DateTime Date { get; set; }
+        private string date;
+        public string Date
+        {
+            get
+            {
+                return Convert.ToDateTime(date).ToString("yyyy-MM-dd");
+            }
+            set
+            {
+                date = value;
+            }
+        }
         public DateTime CreatedDate { get; set; }
 
         public string CreatedByAppUserId { get; set; }
