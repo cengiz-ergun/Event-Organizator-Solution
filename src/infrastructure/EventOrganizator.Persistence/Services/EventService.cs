@@ -10,9 +10,11 @@ using EventOrganizator.Domain.Entities.Identity;
 using EventOrganizator.Domain.Enum;
 using EventOrganizator.Persistence.Repositories.Category;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -97,15 +99,21 @@ namespace EventOrganizator.Persistence.Services
             return response;
         }
 
-        public async Task<Response> GetEvent()
+        public async Task<Response> GetEvent(GetEventsByQueryDTO getEventsByQueryDTO)
         {
             Response response = new();
-
             var query = _unitOfWork.EventRepository.Table;
 
+            if (getEventsByQueryDTO.Page == 0 && getEventsByQueryDTO.Size == 0)
+            {
+                response.Data = await query.Select(e => _mapper.Map<EventDTO>(e)).ToListAsync<object>();
+            }
+            else
+            {
+                var data = query.Skip(getEventsByQueryDTO.Page * getEventsByQueryDTO.Size).Take(getEventsByQueryDTO.Size);
+                response.Data = await data.Select(e => _mapper.Map<EventDTO>(e)).ToListAsync<object>();
+            }
             response.HttpStatusCode = System.Net.HttpStatusCode.OK;
-            response.Data = await query.Select(e => _mapper.Map<EventDTO>(e)).ToListAsync<object>();
-
             return response;    
         }
 

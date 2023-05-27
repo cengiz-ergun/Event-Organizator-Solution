@@ -11,7 +11,7 @@ namespace EventOrganizator.Application.Abstractions.Services
     public interface IEventService
     {        
         Task<Response> AddEvent(CreateEventDTO createEventDTO);
-        Task<Response> GetEvent();
+        Task<Response> GetEvent(GetEventsByQueryDTO getEventsByQueryDTO);
         Task<Response> GetEventById(GetEventByIdDTO getEventByIdDTO);
         Task<Response> PatchEvent(int Id, PatchEventByAdministratorDTO patchEventByAdministratorDTO);
         Task<Response> PatchEvent(PatchEventByMemberDTO patchEventByMemberDTO);

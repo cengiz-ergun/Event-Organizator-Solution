@@ -14,7 +14,19 @@ namespace EventOrganizator.Application.DTOs.Event
         public string Name { get; set; }
         public string Details { get; set; }
         public string Address { get; set; }
-        public EventStatus EventStatus { get; set; }
+        //public EventStatus EventStatus { get; set; }
+        private object eventStatus;
+        public object EventStatus
+        {
+            get
+            {
+                return eventStatus.ToString();
+            }
+            set
+            {
+                eventStatus = (EventStatus)Enum.Parse(typeof(EventStatus), value.ToString());
+            }
+        }
         public int NumberOfPeople { get; set; }
         //public DateTime Date { get; set; }
         private string date;

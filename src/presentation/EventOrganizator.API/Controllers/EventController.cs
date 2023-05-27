@@ -24,9 +24,9 @@ namespace EventOrganizator.API.Controllers
 
         [Authorize(Roles = "Administrator,Member")]
         [HttpGet]
-        public async Task<IActionResult> GetEvent()
+        public async Task<IActionResult> GetEvent([FromQuery] GetEventsByQueryDTO getEventsByQueryDTO)
         {
-            Response response = await _eventService.GetEvent();
+            Response response = await _eventService.GetEvent(getEventsByQueryDTO);
             return CustomHttpResponse.Result(response);
         }
 
